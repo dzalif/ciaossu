@@ -1,4 +1,4 @@
-package com.example.ciaossu.data
+package com.example.ciaossu.data.network
 
 import com.example.ciaossu.data.network.response.CurrentWeatherResponse
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
@@ -21,7 +21,7 @@ interface ApiService {
     ): Deferred<CurrentWeatherResponse>
 
     companion object {
-        operator fun invoke(): ApiService {
+        operator fun invoke(connectivityInterceptor: ConnectivityInterceptor): ApiService {
 
             val reqInterceptor = Interceptor {
                 val url = it.request()
@@ -39,6 +39,7 @@ interface ApiService {
 
             val okHttpClient = OkHttpClient.Builder()
                 .addInterceptor(reqInterceptor)
+                .addInterceptor(connectivityInterceptor)
                 .build()
 
             return Retrofit.Builder()
