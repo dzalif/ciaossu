@@ -10,11 +10,11 @@ import com.example.ciaossu.data.db.entity.CurrentWeatherEntry
     entities = [CurrentWeatherEntry::class],
     version = 1
 )
-abstract class CiaoussuDatabase : RoomDatabase() {
+abstract class CiaossuDatabase : RoomDatabase() {
     abstract fun currenWeatherDao(): CurrentWeatherDao
 
     companion object {
-        @Volatile private var instance: CiaoussuDatabase? = null
+        @Volatile private var instance: CiaossuDatabase? = null
         private val LOCK = Any()
 
         operator fun invoke(context: Context) = instance ?: synchronized(LOCK) {
@@ -23,7 +23,7 @@ abstract class CiaoussuDatabase : RoomDatabase() {
 
         private fun buildDatabase(context: Context) =
             Room.databaseBuilder(context.applicationContext,
-                CiaoussuDatabase::class.java,
+                CiaossuDatabase::class.java,
                 "ciaossu.db")
                 .build()
     }
